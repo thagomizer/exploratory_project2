@@ -1,3 +1,5 @@
+# Question 1
+
 library(plyr)
 
 if (!file.exists("NEI_data.zip")) {
@@ -11,7 +13,6 @@ if (!file.exists("Source_Classification_Code.rds")) {
 scc <- readRDS(file = "Source_Classification_Code.rds");
 pm25 <- readRDS(file = "summarySCC_PM25.rds");
 
-# Question 1
 emissionsByYear <- ddply(pm25, "year", summarise, total = sum(Emissions))
 
 png(filename="total_emissions_over_time.png")
