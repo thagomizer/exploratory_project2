@@ -1,4 +1,4 @@
-# Question 3
+# Question 5
 
 library(plyr)
 library(ggplot2)
@@ -15,19 +15,18 @@ scc <- readRDS(file = "Source_Classification_Code.rds");
 pm25 <- readRDS(file = "summarySCC_PM25.rds");
 
 baltimorePM25 <- pm25[pm25["fips"] == "24510",]
-baltimorePM25$typefactor <- factor(baltimorePM25$type)
 
-emissionsByYearByType <- ddply(baltimorePM25, c("year", "typefactor"), summarise, total = sum(Emissions))
+motorSources <- scc[grepl("*Vehicles", scc$EI.Sector),]
+motorPM25 <- baltimorePM25[baltimorePM25$SCC %in% motorSources$SCC,]
 
-png(filename="baltimore_emissions_by_type.png")
+emissionsByYear <- ddply(motorPM25, "year", summarise, total = sum(Emissions))
+
+png(filename="motor_emissions_in_baltimore_by_year.png")
 qplot(x = year,
       xlab = "Year",
       y = total,
       ylab = "Total Emissions (tons)",
-      data = emissionsByYearByType,
-      color = typefactor,
+      data = emissionsByYear,
       geom = c("point", "smooth"),
       method = "loess")
 dev.off()
-
-

@@ -21,10 +21,11 @@ coalPM25 <- pm25[pm25$SCC %in% coalSources$SCC,]
 emissionsByYear <- ddply(coalPM25, "year", summarise, total = sum(Emissions))
 
 png(filename="coal_emissions_by_year.png")
-qplot(x = year,
-      xlab = "Year",
-      y = total,
-      ylab = "Total Emissions",
-      data = emissionsByYear,
-      geom = c("point", "smooth"))
+qplot(x      = year,
+      xlab   = "Year",
+      y      = total,
+      ylab   = "Total Emissions (tons)",
+      data   = emissionsByYear,
+      geom   = c("point", "smooth"),
+      method = "loess")
 dev.off()

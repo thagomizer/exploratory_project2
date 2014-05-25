@@ -21,7 +21,7 @@ png(filename="baltimore_total_emissions.png")
 plot(x    = emissionsByYear$year,
      y    = emissionsByYear$total / 1000,
      type = "l",
-     ylab = "Total Emissions from All Sources (in thousands)",
+     ylab = "Total Emissions from All Sources (kilotons)",
      xlab = "Year"
      )
 dev.off()
